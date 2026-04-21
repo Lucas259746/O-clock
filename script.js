@@ -1,3 +1,12 @@
+// ===== SERVICE WORKER REGISTRATION =====
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').then((registration) => {
+    console.log('Service Worker enregistré:', registration);
+  }).catch((error) => {
+    console.log('Erreur Service Worker:', error);
+  });
+}
+
 // ===== TIMER =====
 let timerSeconds = 0;
 let timerInterval = null;
@@ -151,6 +160,25 @@ updateClock();
 // ===== ALARM =====
 let alarms = [];
 
+// Charger les alarmes depuis localStorage au démarrage
+function loadAlarms() {
+  const saved = localStorage.getItem('alarms');
+  if (saved) {
+    try {
+      alarms = JSON.parse(saved);
+      updateAlarmList();
+    } catch (e) {
+      console.log('Erreur lors du chargement des alarmes:', e);
+      alarms = [];
+    }
+  }
+}
+
+// Sauvegarder les alarmes dans localStorage
+function saveAlarms() {
+  localStorage.setItem('alarms', JSON.stringify(alarms));
+}
+
 function addAlarm() {
   const timeInput = document.getElementById("alarmTime").value;
   const messageInput = document.getElementById("alarmMessage").value;
@@ -166,6 +194,7 @@ function addAlarm() {
     message: messageInput,
   });
 
+  saveAlarms();
   document.getElementById("alarmTime").value = "";
   document.getElementById("alarmMessage").value = "";
   updateAlarmList();
@@ -230,6 +259,7 @@ function calculateTimeUntil(alarmTime) {
 
 function deleteAlarm(id) {
   alarms = alarms.filter((alarm) => alarm.id !== id);
+  saveAlarms();
   updateAlarmList();
 }
 
@@ -259,3 +289,6 @@ setInterval(() => {
   updateAlarmList();
   checkAlarms();
 }, 1000);
+
+// Charger les alarmes sauvegardées au démarrage
+loadAlarms();

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>O-Clock - Minuteur, Chronomètre, Horloge, Réveil</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>⏰ O-Clock</h1>
+        <p>Minuteur • Chronomètre • Horloge • Réveil</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('timer')">
+          ⏱️ Minuteur
+        </button>
+        <button class="tab-button" onclick="switchTab('stopwatch')">
+          ⏲️ Chronomètre
+        </button>
+        <button class="tab-button" onclick="switchTab('clock')">
+          🕐 Horloge
+        </button>
+        <button class="tab-button" onclick="switchTab('alarm')">
+          ⏰ Réveil
+        </button>
+      </div>
+
+      <!-- MINUTEUR -->
+      <div id="timer" class="tab-content active">
+        <div class="alert-box" id="timerAlert">
+          <h2>⏰ Temps écoulé!</h2>
+          <p>Votre minuteur a atteint zéro.</p>
+        </div>
+        <div class="display" id="timerDisplay">00:00:00</div>
+        <div class="input-group">
+          <input
+            type="number"
+            id="timerInput"
+            placeholder="Minutes"
+            min="0"
+            max="59"
+          />
+          <button onclick="setTimerFromInput()">Définir</button>
+        </div>
+        <div class="arrow-buttons">
+          <button onclick="decrementTimer()">-</button>
+          <button onclick="incrementTimer()">+</button>
+        </div>
+        <div class="controls">
+          <button id="timerStartBtn" onclick="toggleTimer()">
+            ▶️ Démarrer
+          </button>
+          <button class="button-danger" onclick="resetTimer()">
+            🔄 Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <!-- CHRONOMÈTRE -->
+      <div id="stopwatch" class="tab-content">
+        <div class="display" id="stopwatchDisplay">00:00:00</div>
+        <div class="controls">
+          <button id="stopwatchStartBtn" onclick="toggleStopwatch()">
+            ▶️ Démarrer
+          </button>
+          <button class="button-danger" onclick="resetStopwatch()">
+            🔄 Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <!-- HORLOGE -->
+      <div id="clock" class="tab-content">
+        <div class="display" id="digitalClock">00:00:00</div>
+        <div class="clock-analog">
+          <div class="clock-hand hour-hand" id="hourHand"></div>
+          <div class="clock-hand minute-hand" id="minuteHand"></div>
+          <div class="clock-hand second-hand" id="secondHand"></div>
+          <div class="clock-center"></div>
+        </div>
+      </div>
+
+      <!-- RÉVEIL -->
+      <div id="alarm" class="tab-content">
+        <div class="alert-box" id="alarmAlert">
+          <h2>🔔 Alarme!</h2>
+          <p id="alarmAlertMessage">Votre alarme a sonné!</p>
+        </div>
+        <div class="input-group">
+          <input type="time" id="alarmTime" placeholder="HH:MM" />
+          <input
+            type="text"
+            id="alarmMessage"
+            placeholder="Message"
+            maxlength="50"
+          />
+          <button onclick="addAlarm()">➕ Ajouter</button>
+        </div>
+        <div class="alarm-list" id="alarmList">
+          <h3>Alarmes définies</h3>
+          <div id="alarmItems"></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>© 2026 O-Clock - Créé avec ❤️</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

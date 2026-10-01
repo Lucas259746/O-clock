@@ -1,11 +1,7 @@
 const CACHE_NAME = 'o-clock-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/manifest.json'
-];
+const appRoot = new URL('./', self.location).href;
+const urlsToCache = ['index.html', 'style.css', 'script.js', 'manifest.json']
+  .map((path) => new URL(path, appRoot).href);
 
 // Installation du service worker et mise en cache
 self.addEventListener('install', (event) => {
